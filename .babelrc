@@ -1,0 +1,12 @@
+{
+    "presets": [ "es2016" ],
+    "plugins": [
+        [
+            "transform-runtime",
+            {
+                "polyfill": false,
+                "regenerator": true
+            }
+        ]
+    ]
+}

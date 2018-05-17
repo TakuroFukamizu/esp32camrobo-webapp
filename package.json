@@ -1,0 +1,21 @@
+{
+  "name": "web-ble-sample",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "parcel src/index.html",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@types/web-bluetooth": "0.0.4",
+    "parcel-bundler": "^1.8.1"
+  },
+  "devDependencies": {
+    "babel-plugin-transform-runtime": "^6.23.0",
+    "babel-runtime": "^6.26.0",
+    "typescript": "^2.8.3"
+  }
+}
