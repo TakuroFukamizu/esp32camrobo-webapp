@@ -12,10 +12,16 @@ export default class ESP32Controller {
     }
 
     async connect() { 
+        // const device = await navigator.bluetooth.requestDevice({
+        //     filters: [{
+        //         services: [CONFIG.SERVICE_UUID.toLowerCase()],
+        //     }]
+        // });
         const device = await navigator.bluetooth.requestDevice({
-            filters: [{
-                services: [CONFIG.SERVICE_UUID.toLowerCase()],
-            }]
+            filters: [
+                { services: [CONFIG.SERVICE_UUID.toLowerCase()] },
+                { namePrefix: "YHD2017W-CP-ONI" }
+            ]
         });
         const server = await device.gatt.connect();
         this.service = await server.getPrimaryService(CONFIG.SERVICE_UUID.toLowerCase());
