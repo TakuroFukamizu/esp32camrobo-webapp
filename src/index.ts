@@ -8,6 +8,9 @@ const init = async function() {
     document.getElementById("btnConnect").onclick = async (event) => { 
         await con.connect();
         console.info("connected");
+    };
+    document.getElementById("btnForward").onclick = async (event) => { 
+        console.info("btnForward");
         con.sendCommand(CMD_FORWARD); //CMD_FORWARD
     };
 }
