@@ -27,6 +27,7 @@
     "node-sass": "^4.7.2",
     "parcel-bundler": "^1.6.2",
     "parcel-plugin-vue": "^1.5.0",
+    "pug": "^2.0.3",
     "rimraf": "^2.6.2",
     "tslint": "^5.9.1",
     "tslint-config-standard": "^7.0.0",

@@ -1,4 +1,4 @@
-import CONFIG from "./config";
+import { CONFIG } from "./config";
 
 export default class ESP32Controller {
     private device: BluetoothDevice | null;
@@ -25,15 +25,25 @@ export default class ESP32Controller {
                 { namePrefix: "YHD2017W-CP-ONI" }
             ]
         });
+        if (device.gatt == null) throw Error('device.gatt is null');
         const server = await device.gatt.connect();
         this.device = device;
         this.service = await server.getPrimaryService(CONFIG.SERVICE_UUID.toLowerCase());
 
         await this.getCommandCharacteristic();
+
+        if (this.device == null || this.device.gatt == null) return false;
+        return this.device.gatt.connected;
     }
 
-    async disconnect() {
-        this.device.gatt.disconnect();
+    disconnect() {
+        if (this.device != null && this.device.gatt != null && this.device.gatt.connected) {
+            this.device.gatt.disconnect();
+        }
+        this.device = null;
+        this.service = null;
+        this.commandChar = null;
+        this.receiveChar = null;
     }
 
     async getCommandCharacteristic() { 
@@ -42,6 +52,7 @@ export default class ESP32Controller {
         
         if (characteristic === null) return new Error("characteristic1 is not found");
         this.commandChar = characteristic;
+        return characteristic;
     }
 
     async sendCommand(value: number) {
@@ -73,10 +84,12 @@ export default class ESP32Controller {
 
         await this.receiveChar.startNotifications();
         characteristic.addEventListener('characteristicvaluechanged', this.onReceiveState);
+        return characteristic;
     }
 
     onReceiveState(event: Event) {
         // let characteristic = event.target;
+        if (this.receiveChar == null) throw new Error('null character');
         console.log(this.receiveChar.value);
     }
 }
