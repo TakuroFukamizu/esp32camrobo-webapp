@@ -1,11 +1,13 @@
 import CONFIG from "./config";
 
-export default class ESP32Controller { 
+export default class ESP32Controller {
+    private device: BluetoothDevice | null;
     private service: BluetoothRemoteGATTService | null;
     private commandChar: BluetoothRemoteGATTCharacteristic | null;
     private receiveChar: BluetoothRemoteGATTCharacteristic | null;
 
-    constructor() { 
+    constructor() {
+        this.device = null;
         this.service = null;
         this.commandChar = null;
         this.receiveChar = null;
@@ -24,9 +26,14 @@ export default class ESP32Controller {
             ]
         });
         const server = await device.gatt.connect();
+        this.device = device;
         this.service = await server.getPrimaryService(CONFIG.SERVICE_UUID.toLowerCase());
 
         await this.getCommandCharacteristic();
+    }
+
+    async disconnect() {
+        this.device.gatt.disconnect();
     }
 
     async getCommandCharacteristic() { 
@@ -45,8 +52,15 @@ export default class ESP32Controller {
 
     async sendCommandWithTime(value: number, time: number) {
         if (this.commandChar == null) throw new Error("characteristic is empty");
-        let binary = Uint8Array.of(value);
-        // FIXIT: timeを追加
+        if (time > 65536) throw new Error("time is too large");
+        // time(Uint26)をLitteEndianでUint8にして添付
+        let buffer = new ArrayBuffer(2);
+        let buf8 = new Uint8Array(buffer);
+        let buf16 = new Uint16Array(buffer);
+        buf16[0] = time;
+        let binary = Uint8Array.of(value, buf8[1], buf8[0]);
+        console.log(binary);
+        console.log(this.commandChar);
         await this.commandChar.writeValue(binary);
     }
 
