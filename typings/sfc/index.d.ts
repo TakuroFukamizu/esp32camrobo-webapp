@@ -24,5 +24,17 @@ declare namespace State {
   interface Root {
     com: ESP32Controller
     isConnected: boolean
+
+    device: {
+      isMobile: boolean,
+      isTablet: boolean
+    },
+    sidebar: {
+      opened: boolean,
+      hidden: boolean
+    },
+    effect: {
+      translate3d: boolean
+    }
   }
 }

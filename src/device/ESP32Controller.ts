@@ -22,7 +22,8 @@ export default class ESP32Controller {
         const device = await navigator.bluetooth.requestDevice({
             filters: [
                 { services: [CONFIG.SERVICE_UUID.toLowerCase()] },
-                { namePrefix: "YHD2017W-CP-ONI" }
+                { namePrefix: "YHD2017W-CP-ONI" },
+                { namePrefix: "CLAPPY_PARK" }
             ]
         });
         if (device.gatt == null) throw Error('device.gatt is null');
@@ -58,6 +59,7 @@ export default class ESP32Controller {
     async sendCommand(value: number) {
         if (this.commandChar == null) throw new Error("characteristic is empty");
         let binary = Uint8Array.of(value);
+        console.log('sendCommand', binary);
         await this.commandChar.writeValue(binary);
     }
 
@@ -69,8 +71,8 @@ export default class ESP32Controller {
         let buf8 = new Uint8Array(buffer);
         let buf16 = new Uint16Array(buffer);
         buf16[0] = time;
-        let binary = Uint8Array.of(value, buf8[1], buf8[0]);
-        console.log(binary);
+        let binary = Uint8Array.of(value, buf8[0], buf8[1]);
+        console.log('sendCommand', binary);
         console.log(this.commandChar);
         await this.commandChar.writeValue(binary);
     }

@@ -1,90 +1,86 @@
 <template lang="pug">
-  div
+div
+    //- nav.navbar.is-fixed-top(role="navigation" aria-label="main navigation")
+    //-     .navbar-brand
+    //-         .navbar-item.has-dropdown.navbar-burger
+    //-             a.navbar-link
+    //-                 span(aria-hidden="true")
+    //-                 span(aria-hidden="true")
+    //-                 span(aria-hidden="true")
+    //-             .navbar-dropdown
+    //-                 router-link.navbar-item(tag="button" :to="{ 'name': 'Connection' }") CONNECT
+    //-                 router-link.navbar-item(tag="button" :to="{ 'name': 'SendCommand' }") SEND COMMAND
+    //-         a.navbar-item(href="/")
+    //-             <img src="https://bulma.io/images/bulma-logo.png" alt="Bulma: a modern CSS framework based on Flexbox" width="112" height="28">
+
+    //-         <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+    //-             <span aria-hidden="true"></span>
+    //-             <span aria-hidden="true"></span>
+    //-             <span aria-hidden="true"></span>
+    //-         </a>
+    div
+        router-link(tag="button" :to="{ 'name': 'Connection' }") CONNECT
+        router-link(tag="button" :to="{ 'name': 'SendCommand' }") SEND COMMAND
     div.main
-      //- img(src="./assets/logo.png")
-      h1 {{ title }}
-      router-link(tag="button" :to="{ 'name': 'Connection' }") CONNECT
-      router-link(tag="button" :to="{ 'name': 'SendCommand' }") SEND COMMAND
-      router-view
+        //- progress.progress.is-primary(value="15" max="100")
+        router-view
 </template>
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
+import { State } from 'vuex-class'
 
 @Component
 export default class App extends Vue {
-  title: string = 'ESP32CAMROBO'
+    title: string = 'ESP32CAMROBO'
+
+    @State('isConnected') isConnected: boolean
+    @State('sidebar') sidebar: any
+
 }
 </script>
 
 <style lang="scss">
-.main {
-  text-align: center;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-}
-
-h1,
-h2 {
-  font-weight: normal;
-}
-
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-
-button {
-  padding: 4px 6px;
-  color: #42b983;
-  border: 1px solid #42b983;
-  outline: none;
-  transition: 0.25s;
-  cursor: pointer;
-
-  &:hover,
-  &.router-link-active {
-    color: #ffffff;
-    background-color: #42b983;
+.app-sidebar {
+  position: fixed;
+  top: 50px;
+  left: 0;
+  bottom: 0;
+  padding: 20px 0 50px;
+  width: 180px;
+  min-width: 45px;
+  max-height: 100vh;
+  height: calc(100% - 50px);
+  z-index: 1024 - 1;
+  background: #FFF;
+  box-shadow: 0 2px 3px rgba(17, 17, 17, 0.1), 0 0 0 1px rgba(17, 17, 17, 0.1);
+  overflow-y: auto;
+  overflow-x: hidden;
+//   @include mobile() {
+//     transform: translate3d(-180px, 0, 0);
+//   }
+  .icon {
+    vertical-align: baseline;
+    &.is-angle {
+      position: absolute;
+      right: 10px;
+      transition: transform .377s ease;
+    }
   }
-}
-
-button + button {
-  margin-left: 4px;
-}
-
-.github-corner:hover .octo-arm {
-  animation: octocat-wave 560ms ease-in-out;
-}
-
-@keyframes octocat-wave {
-  0%,
-  100% {
-    transform: rotate(0);
+  .menu-label {
+    padding-left: 5px;
   }
-  20%,
-  60% {
-    transform: rotate(-25deg);
-  }
-  40%,
-  80% {
-    transform: rotate(10deg);
-  }
-}
-
-@media (max-width: 500px) {
-  .github-corner:hover .octo-arm {
-    animation: none;
-  }
-  .github-corner .octo-arm {
-    animation: octocat-wave 560ms ease-in-out;
+  .menu-list {
+    li a {
+      &[aria-expanded="true"] {
+        .is-angle {
+          transform: rotate(180deg);
+        }
+      }
+    }
+    li a + ul {
+      margin: 0 10px 0 15px;
+    }
   }
 }
 </style>

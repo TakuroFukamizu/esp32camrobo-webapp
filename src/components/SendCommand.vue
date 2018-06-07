@@ -1,16 +1,21 @@
 <template lang="pug">
-div
-    div
-        input(type="number" v-model="time")
-    dif
-        button(@click="forward") FORWARD
-        button(@click="back") BACK
-        button(@click="stop") STOP
-        button(@click="spinturn") SPIN_TURN
-        button(@click="turnleft") TURN_LEFT
-        button(@click="turnlight") TURN_RIGHT
-        button(@click="srvon") SRV_ON
-        button(@click="srvoff") SRV_OFF
+div#send-command.tile.is-ancestor
+    div.tile.is-vertical.is-parent
+        .tile.is-child
+            b-field(label="Time(ms)")
+                b-input.is-primary(type="number" v-model="time")
+    div.tile.is-vertical.is-parent
+        .tile.is-child
+            button.button(@click="forward") FORWARD
+            button.button(@click="back") BACK
+            button.button(@click="stop") STOP
+        .tile.is-child
+            button.button(@click="spinturn") SPIN_TURN
+            button.button(@click="turnleft") TURN_LEFT
+            button.button(@click="turnlight") TURN_RIGHT
+        .tile.is-child
+            button.button(@click="srvon") SRV_ON
+            button.button(@click="srvoff") SRV_OFF
 </template>
 
 <script lang="ts">
@@ -23,7 +28,7 @@ import { CMD } from '../device/config'
 export default class SendCommand extends Vue {
     @State('con') con: ESP32Controller
 
-    time: number
+    time: number = 1000
 
     forward() {
         console.log(this.time)
