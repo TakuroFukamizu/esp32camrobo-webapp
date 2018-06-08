@@ -5,6 +5,10 @@ import App from './app.vue'
 import router from './router'
 import store from './store'
 
+// Scss/css
+import './stylesheets/bulma.scss'
+import './stylesheets/main.scss'
+
 Vue.use(Buefy)
 
 new Vue({

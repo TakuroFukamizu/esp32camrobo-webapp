@@ -1,21 +1,43 @@
 <template lang="pug">
-div#send-command.tile.is-ancestor
-    div.tile.is-vertical.is-parent
-        .tile.is-child
-            b-field(label="Time(ms)")
-                b-input.is-primary(type="number" v-model="time")
-    div.tile.is-vertical.is-parent
-        .tile.is-child
-            button.button(@click="forward") FORWARD
-            button.button(@click="back") BACK
-            button.button(@click="stop") STOP
-        .tile.is-child
-            button.button(@click="spinturn") SPIN_TURN
-            button.button(@click="turnleft") TURN_LEFT
-            button.button(@click="turnlight") TURN_RIGHT
-        .tile.is-child
-            button.button(@click="srvon") SRV_ON
-            button.button(@click="srvoff") SRV_OFF
+div#send-command
+    div.box
+        h2 SEND COMMAND
+    .tile.is-ancestor
+        div.tile.is-vertical.is-parent.box
+            .tile.is-child
+                h3 FORWARD
+                b-field(label="Time(ms)")
+                    b-input.is-primary(type="number" v-model="timeForward")
+                button.button.is-primary(@click="forward") SEND
+            .tile.is-child
+                h3 BACK
+                b-field(label="Time(ms)")
+                    b-input.is-primary(type="number" v-model="timeBack")
+                button.button.is-primary(@click="back") SEND
+            .tile.is-child
+                h3 STOP
+                button.button.is-primary(@click="stop") SEND
+        div.tile.is-vertical.is-parent.box
+            .tile.is-child
+                h3 SPIN TURN
+                button.button.is-primary(@click="spinturn") SEND
+            .tile.is-child
+                h3 TURN LEFT
+                b-field(label="Time(ms)")
+                    b-input.is-primary(type="number" v-model="timeTurnLeft")
+                button.button.is-primary(@click="turnleft") SEND
+            .tile.is-child
+                h3 TURN RIGHT
+                b-field(label="Time(ms)")
+                    b-input.is-primary(type="number" v-model="timeTurnRight")
+                button.button.is-primary(@click="turnlight") SEND
+        div.tile.is-vertical.is-parent.box
+            .tile.is-child
+                h3 SRV ON
+                button.button.is-primary(@click="srvon") SEND
+            .tile.is-child
+                h3 SRV OFF
+                button.button.is-primary(@click="srvoff") SEND
 </template>
 
 <script lang="ts">
@@ -29,6 +51,10 @@ export default class SendCommand extends Vue {
     @State('con') con: ESP32Controller
 
     time: number = 1000
+    timeForward: number = 1000
+    timeBack: number = 1000
+    timeTurnLeft: number = 1000
+    timeTurnRight: number = 1000
 
     forward() {
         console.log(this.time)

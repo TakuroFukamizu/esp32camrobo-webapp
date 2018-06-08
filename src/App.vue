@@ -1,29 +1,18 @@
 <template lang="pug">
-div
-    //- nav.navbar.is-fixed-top(role="navigation" aria-label="main navigation")
-    //-     .navbar-brand
-    //-         .navbar-item.has-dropdown.navbar-burger
-    //-             a.navbar-link
-    //-                 span(aria-hidden="true")
-    //-                 span(aria-hidden="true")
-    //-                 span(aria-hidden="true")
-    //-             .navbar-dropdown
-    //-                 router-link.navbar-item(tag="button" :to="{ 'name': 'Connection' }") CONNECT
-    //-                 router-link.navbar-item(tag="button" :to="{ 'name': 'SendCommand' }") SEND COMMAND
-    //-         a.navbar-item(href="/")
-    //-             <img src="https://bulma.io/images/bulma-logo.png" alt="Bulma: a modern CSS framework based on Flexbox" width="112" height="28">
+    #app
+        div.menu.box
+            .content
+                H1 Menu
+                router-link.button.is-primary.is-outlined(tag="button" :to="{ 'name': 'Connection' }") CONNECT
+                router-link.button.is-primary.is-outlined(tag="button" :to="{ 'name': 'SendCommand' }") SEND COMMAND
+        div.main.box
+            router-view
+        footer.footer
+            .container
+                .content.has-text-centered
+                    p(v-if="isConnected") CAMROBO: Connecting
+                    p(v-else) CAMROBO: Not connected
 
-    //-         <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
-    //-             <span aria-hidden="true"></span>
-    //-             <span aria-hidden="true"></span>
-    //-             <span aria-hidden="true"></span>
-    //-         </a>
-    div
-        router-link(tag="button" :to="{ 'name': 'Connection' }") CONNECT
-        router-link(tag="button" :to="{ 'name': 'SendCommand' }") SEND COMMAND
-    div.main
-        //- progress.progress.is-primary(value="15" max="100")
-        router-view
 </template>
 
 <script lang="ts">

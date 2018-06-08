@@ -1,5 +1,6 @@
 <template lang="pug">
 div#connection
+    H2 Connection
     button.button.is-success(@click="connect") Connect
     button.button.is-danger(@click="disconnect") Disconnect
 </template>
