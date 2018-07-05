@@ -50,19 +50,18 @@ import { CMD } from '../device/config'
 export default class SendCommand extends Vue {
     @State('con') con: ESP32Controller
 
-    time: number = 1000
     timeForward: number = 1000
     timeBack: number = 1000
     timeTurnLeft: number = 1000
     timeTurnRight: number = 1000
 
     forward() {
-        console.log(this.time)
-        this.con.sendCommandWithTime(CMD.FORWARD, this.time)
+        console.log(this.timeForward)
+        this.con.sendCommandWithTime(CMD.FORWARD, this.timeForward)
     }
     back() {
-        console.log(this.time)
-        this.con.sendCommandWithTime(CMD.BACK, this.time)
+        console.log(this.timeBack)
+        this.con.sendCommandWithTime(CMD.BACK, this.timeBack)
     }
     stop() {
         this.con.sendCommand(CMD.STOP)
@@ -72,12 +71,12 @@ export default class SendCommand extends Vue {
         this.con.sendCommand(CMD.SPIN_TURN)
     }
     turnleft() {
-        console.log(this.time)
-        this.con.sendCommandWithTime(CMD.TURN_LEFT, this.time)
+        console.log(this.timeTurnLeft)
+        this.con.sendCommandWithTime(CMD.TURN_LEFT, this.timeTurnLeft)
     }
     turnlight() {
-        console.log(this.time)
-        this.con.sendCommandWithTime(CMD.TURN_RIGHT, this.time)
+        console.log(this.timeTurnRight)
+        this.con.sendCommandWithTime(CMD.TURN_RIGHT, this.timeTurnRight)
     }
 
     srvon() {
