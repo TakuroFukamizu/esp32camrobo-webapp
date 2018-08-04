@@ -23,7 +23,8 @@ export default class ESP32Controller {
             filters: [
                 { services: [CONFIG.SERVICE_UUID.toLowerCase()] },
                 { namePrefix: "YHD2017W-CP-ONI" },
-                { namePrefix: "CLAPPY_PARK" }
+                { namePrefix: "CLAPPY_PARK" },
+                { namePrefix: "M5_CLAPPY_PARK" }
             ]
         });
         if (device.gatt == null) throw Error('device.gatt is null');
